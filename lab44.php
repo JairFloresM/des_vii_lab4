@@ -10,22 +10,18 @@
     <?php
         define("TAM", 5);
         $evenNumber = true;
+        $numeros = "";
 
         if(array_key_exists('enviar', $_POST)) {
             $num = $_POST['num'];
             $numeros = $_POST['numeros'];
             if(!empty($num)) {
-                echo "paso1";
                 if($num % 2 == 0) {
+                    $numeros .= $num.',';
                     $evenNumber = true;
-                    if(!empty($numeros)) {
-                        $numeros = array();
-                    }
-                    array_push($numeros, $num);
                 } else {
                     $evenNumber = false;
                 }
-                echo "paso2";
             } else {
                 echo "Por favor ingrese un numero.<br> <br>";
             }
@@ -37,17 +33,29 @@
         <br>
 
         <?php 
-            if(!$evenNumber && count($numeros) > 0) { 
-                ?>
-                <p>El numero no es par</p>
+            if(!$evenNumber ) { ?>
+                <p>El numero no es par  </p>
         <?php  } ?>
 
+        <br>
         Ingrese un numero par
         <br>
         <input type="text" name="num">
-        <input type="hidden" name="numeros" value=" <?= $numeros ?> ">
+        <input type="hidden" name="numeros" value="<?=$numeros ?>">
         <input type="submit" value="Enviar" name="enviar">
     </form>
+
+    <?php 
+        $arr = explode(",", $numeros);
+        if(sizeof($arr) == TAM) {
+            echo "<br> Los numeros pares ingresados son: <br>";
+            foreach($arr as $val) {
+                echo "<br>$val";
+            }
+        }
+    ?>
+
+    
 
 </body>
 </html>
